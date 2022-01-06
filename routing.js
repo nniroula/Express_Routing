@@ -62,10 +62,49 @@ app.get("/median", (req, res) => {
     return res.send(val);
 })
 
+/*  MODE  */
 
+/* Build a frequency counter object from an array
+* @param {Array} arr any array
+*/
+function createFrequencyCounter(arr) {
+ return arr.reduce(function(acc, next) {
+   acc[next] = (acc[next] || 0) + 1;
+   return acc;
+ }, {});
+}
+
+/**
+* Find the most common element in the array
+* @param {Array} arr any array
+*/
+function findMode(arr) {
+ let freqCounter = createFrequencyCounter(arr);
+
+ let count = 0;
+ let mostFrequent;
+
+ for (let key in freqCounter) {
+   if (freqCounter[key] > count) {
+     mostFrequent = key;
+     count = freqCounter[key];
+   }
+ }
+
+ return +mostFrequent;
+}
+
+app.get("/mode", (req, res) => {
+    // in browser http://localhost:3000/mean?nums=1,2,3,4,6,8
+    let {nums} = req.query;  // this in browsser is http://localhost:3000/mean?nums=1,2,3. It return 1,2,3
+    let result = {
+        operation: "mode",
+        result: findMode(nums)
+      }
+      return res.send(result);
+})
 
 // start a server 
 app.listen(3000, function(){
     console.log("App running at port 3000");
 })
-
