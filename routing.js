@@ -35,17 +35,12 @@ app.get("/mean", (req, res) => {
         value: mean
     }
     
-    // let val = res.json(resp);  // works fine
-    let val = res.json(`response: ${resp}`);
-    // console.log("respoonse:" + val);
-    // return res.send(`${mean}`); // works fine
+    let val = res.json(resp);  // works fine
     return res.send(val);
-
 })
-
-
 
 // start a server 
 app.listen(3000, function(){
     console.log("App running at port 3000");
 })
+
